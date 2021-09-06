@@ -2,6 +2,7 @@ import { max, sum } from '../src/functions/util.js';
 import { summary } from '../src/functions/summary.js'
 import { readFile } from 'fs/promises';
 import Life from '../src/life.js';
+import { ORIGIN_TOTAL_TALENT, TITLE } from '../src/constant.js';
 
 global.json = async fileName => JSON.parse(await readFile(`data/${fileName}.json`));
 
@@ -50,7 +51,7 @@ class App {
         this.#talentExtend = global.localStorage.talentExtend;
         await this.#life.initial();
         this.output(`\rLoading Complete.
-人生重开模拟器
+${TITLE}
 这垃圾人生一秒也不想待了
 \n🎉键入 \x1B[4m/remake\x1B[24m 开始游戏`,
             true
@@ -396,7 +397,7 @@ class App {
             case this.Steps.TALENT:
                 if(this.#talentSelected.size != 3) return warn(this.list(), `⚠请选择3个天赋`);
                 this.#step = this.Steps.PROPERTY;
-                this.#propertyAllocation.total = 20 + this.#life.getTalentAllocationAddition(
+                this.#propertyAllocation.total = ORIGIN_TOTAL_TALENT + this.#life.getTalentAllocationAddition(
                     Array.from(this.#talentSelected).map(({id})=>id)
                 );
                 this.#propertyAllocation.TLT = Array.from(this.#talentSelected).map(({id})=>id);
